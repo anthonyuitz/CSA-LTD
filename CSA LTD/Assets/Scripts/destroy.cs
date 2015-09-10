@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class destroy : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+public class destroy : MonoBehaviour
+{
+	void OnCollisionEnter (Collision col)
+	{
+		if(col.gameObject.tag == "Wall")
+		{
+			Destroy(gameObject);
+		}
 	}
 }
