@@ -4,6 +4,7 @@ using System.Collections;
 public class EnemyMovement : MonoBehaviour {
 
     public Rigidbody rb;
+    
     void Start()
     {
         rb = GetComponent<Rigidbody>();
