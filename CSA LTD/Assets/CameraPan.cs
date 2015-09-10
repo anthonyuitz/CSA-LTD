@@ -14,7 +14,9 @@ public class CameraPan : MonoBehaviour {
 		var scrollSpeed = 70;
 		var mPosX = Input.mousePosition.x;
 		var mPosY = Input.mousePosition.y;
-		var bountryRadius = 10;
+		var xBountryRadius = 10;
+        var yBountryRadius = 10;
+        var zBountryRadius = 20;
 		
 		
 		// Do camera movement by mouse position
@@ -43,9 +45,9 @@ public class CameraPan : MonoBehaviour {
 		}
 
 		transform.position = new Vector3(
-			Mathf.Clamp(transform.position.x, -bountryRadius, bountryRadius),
-			Mathf.Clamp(transform.position.y, -bountryRadius, bountryRadius),
-			Mathf.Clamp(transform.position.z, -bountryRadius, bountryRadius));
+			Mathf.Clamp(transform.position.x, -xBountryRadius, xBountryRadius),
+			Mathf.Clamp(transform.position.y, -yBountryRadius, yBountryRadius),
+			Mathf.Clamp(transform.position.z, -zBountryRadius, zBountryRadius));
 
 	}
 }
