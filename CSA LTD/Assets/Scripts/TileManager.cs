@@ -14,9 +14,11 @@ public class TileManager : MonoBehaviour {
 	
     void OnMouseOver()
     {
-        Renderer rend = GetComponent<Renderer>();
-        if (!rend.material.color.Equals(Color.red))
+        Vector3 currPos = transform.position;
+
+        if (GameManager.instance.boardScript.tileStatus(currPos) == 0)
         {
+            Renderer rend = GetComponent<Renderer>();
             rend.material.color = Color.green;
         }
     }
@@ -25,7 +27,16 @@ public class TileManager : MonoBehaviour {
     {
         Vector3 currPos = transform.position;
 
-        GameObject instance = Instantiate(tower, new Vector3(currPos.x + .5F, 1F, currPos.z - .5F), Quaternion.identity) as GameObject;
+        if (GameManager.instance.boardScript.tileStatus(currPos) == 0)
+        {
+            GameObject instance = Instantiate(tower, new Vector3(currPos.x + .5F, 1F, currPos.z - .5F), Quaternion.identity) as GameObject;
+
+            GameManager.instance.boardScript.towerPlaced(currPos, 1);
+
+            Renderer rend = GetComponent<Renderer>();
+            rend.material.color = Color.gray;
+        }
+        
 
         /* Renderer rend = GetComponent<Renderer>();
         if(rend.material.color.Equals(initialColor) || rend.material.color.Equals(Color.green))
@@ -41,6 +52,9 @@ public class TileManager : MonoBehaviour {
     void OnMouseExit()
     {
         Renderer rend = GetComponent<Renderer>();
-        rend.material.color = initialColor;
+        if (!rend.material.color.Equals(Color.gray))
+        {
+            rend.material.color = initialColor;
+        }
     }
 }
