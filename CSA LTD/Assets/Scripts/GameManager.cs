@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
     public GameObject obj;
     private Transform enemyHolder;
+	private List<Vector3> spawnPath;
 
     public BoardManager boardScript;
 
@@ -22,6 +24,7 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
         enemyHolder = new GameObject("Enemies").transform;
         boardScript = GetComponent<BoardManager>();
+
         InitGame();
     }
 
@@ -41,5 +44,10 @@ public class GameManager : MonoBehaviour {
 
             instance.transform.SetParent(enemyHolder);   
         }
+	}
+
+	public List<Vector3> findShortestPath(Vector3 start, Vector3 end) {
+			List<Vector3> ans = new List<Vector3> ();
+			return ans;
 	}
 }

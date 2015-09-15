@@ -19,21 +19,18 @@ public class BoardManager : MonoBehaviour {
         return gridPositions.IndexOf(vector);
     }
 
-    public void towerPlaced(Vector3 vector, int towerCode)
+    public void towerPlaced(int index, int towerCode)
     {
-        int index = getIndexFromVector(vector);
         boardStatus[index] = towerCode;
         boardStatus[index + 1] = towerCode;
-        boardStatus[index + 20] = towerCode;
-        boardStatus[index + 21] = towerCode;
+        boardStatus[index + columns] = towerCode;
+        boardStatus[index + columns + 1] = towerCode;
 
         foreach (Transform child in boardHolder)
         {
-            Vector3 bottomleft = new Vector3(vector.x, vector.y, vector.z - 1F);
-            Vector3 bottomright = new Vector3(vector.x + 1F, vector.y, vector.z - 1F);
-            Vector3 topright = new Vector3(vector.x + 1F, vector.y, vector.z);
+			int childIndex = child.gameObject.GetComponent<TileManager>().index;
 
-            if (child.position.Equals(bottomleft) || child.position.Equals(bottomright) || child.position.Equals(topright))
+			if (childIndex == index+1 || childIndex == index+columns || childIndex == index+columns+1)
             {
                 Renderer rend = child.gameObject.GetComponent<Renderer>();
                 rend.material.color = Color.gray;
@@ -46,6 +43,10 @@ public class BoardManager : MonoBehaviour {
     {
         return boardStatus[getIndexFromVector(vector)];
     }
+
+	public int tileStatus(int index) {
+		return boardStatus [index];
+	}
 
     void InitializeList()
     {
@@ -61,10 +62,10 @@ public class BoardManager : MonoBehaviour {
 
         boardStatus.Clear();
 
-        for (int y = -10; y < columns - 10; y++)
-        {
-            for (int x = -15; x < rows - 15; x++)
-            {
+		for (int y = 14; y >= 15 - rows; y--)
+		{
+			for (int x = -10; x < columns - 10; x++)
+			{
                 boardStatus.Add(0);
             }
         }
@@ -76,9 +77,11 @@ public class BoardManager : MonoBehaviour {
 
         for (int y = 14; y >= 15 - rows; y--)
         {
-            for (int x = -10; x < columns - 10; x++)
+			for (int x = -10; x < columns - 10; x++)
             {
                 GameObject instance = Instantiate(tile, new Vector3(x + .5F, 0.01F, y + .5F), Quaternion.identity) as GameObject;
+
+				instance.GetComponent<TileManager>().index = (14-y)*columns+(x+10);
 
                 instance.transform.SetParent(boardHolder);
             }

@@ -5,6 +5,7 @@ public class TileManager : MonoBehaviour {
 
     Color initialColor;
     public GameObject tower;
+	public int index = -1;
 
 	// Use this for initialization
 	void Start () {
@@ -16,22 +17,38 @@ public class TileManager : MonoBehaviour {
     {
         Vector3 currPos = transform.position;
 
-        if (GameManager.instance.boardScript.tileStatus(currPos) == 0)
+        if (isValidTile())
         {
             Renderer rend = GetComponent<Renderer>();
             rend.material.color = Color.green;
         }
     }
 
+	bool isValidTile() {
+		if (GameManager.instance.boardScript.tileStatus (index) != 0) {
+			return false;
+		}
+		if (GameManager.instance.boardScript.tileStatus (index+1) != 0) {
+			return false;
+		}
+		if (GameManager.instance.boardScript.tileStatus (index+20) != 0) {
+			return false;
+		}
+		if (GameManager.instance.boardScript.tileStatus (index+21) != 0) {
+			return false;
+		}
+		return true;
+	}
+
 	void OnMouseDown()
     {
         Vector3 currPos = transform.position;
 
-        if (GameManager.instance.boardScript.tileStatus(currPos) == 0)
+        if (isValidTile())
         {
             GameObject instance = Instantiate(tower, new Vector3(currPos.x + .5F, 1F, currPos.z - .5F), Quaternion.identity) as GameObject;
 
-            GameManager.instance.boardScript.towerPlaced(currPos, 1);
+            GameManager.instance.boardScript.towerPlaced(index, 1);
 
             Renderer rend = GetComponent<Renderer>();
             rend.material.color = Color.gray;
