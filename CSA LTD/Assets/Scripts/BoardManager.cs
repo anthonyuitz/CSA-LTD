@@ -45,6 +45,10 @@ public class BoardManager : MonoBehaviour {
     }
 
 	public int tileStatus(int index) {
+        if(index >= boardStatus.Count)
+        {
+            return -1;
+        }
 		return boardStatus [index];
 	}
 
@@ -93,5 +97,67 @@ public class BoardManager : MonoBehaviour {
     {
         BoardSetUp();
         InitializeList();
+    }
+
+    public List<Vector3> findShortestPath(Vector3 start)
+    { 
+        List<Vector3> ans = new List<Vector3>();
+        int startIndex = findClosestTile(start);
+        List<int> indexPath = findTilePath(startIndex);
+        ans.Add(start);
+        for(int x = 0; x < indexPath.Count; x++)
+        {
+            ans.Add(gridPositions[indexPath[x]]);
+        }
+        Vector3 end = ans[ans.Count - 1];
+        end.z = end.z - 2F;
+        ans.Add(end);
+        return ans;
+    }
+
+    private int findClosestTile(Vector3 pos)
+    { //untested
+        int ans = -1;
+        double ansDist = 999999;
+
+        foreach (Transform child in boardHolder)
+        {
+            int childIndex = child.gameObject.GetComponent<TileManager>().index;
+            if (pos.z > 15)
+            {
+                if (boardStatus[childIndex] == 0 && childIndex <= 14 && childIndex >= 5)
+                {
+                    double tempDist = Vector3.Distance(child.gameObject.transform.position, pos);
+                    if (tempDist < ansDist)
+                    {
+                        ansDist = tempDist;
+                        ans = childIndex;
+                    }
+                }
+            }
+            else
+            {
+                if (boardStatus[childIndex] == 0)
+                {
+                    double tempDist = Vector3.Distance(child.gameObject.transform.position, pos);
+                    if (tempDist < ansDist)
+                    {
+                        ansDist = tempDist;
+                        ans = childIndex;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+
+    private List<int> findTilePath(int start)
+    { //TODO destination is any tile index 585-594 w/ 0 status
+        List<int> path = new List<int>();
+        for(int x = 10; x < boardStatus.Count; x=x+20)
+        {
+            path.Add(x);
+        }
+        return path;
     }
 }

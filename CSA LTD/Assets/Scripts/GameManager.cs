@@ -46,8 +46,5 @@ public class GameManager : MonoBehaviour {
         }
 	}
 
-	public List<Vector3> findShortestPath(Vector3 start, Vector3 end) {
-			List<Vector3> ans = new List<Vector3> ();
-			return ans;
-	}
+
 }

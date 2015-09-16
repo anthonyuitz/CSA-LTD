@@ -15,7 +15,6 @@ public class TileManager : MonoBehaviour {
 	
     void OnMouseOver()
     {
-        Vector3 currPos = transform.position;
 
         if (isValidTile())
         {
@@ -25,6 +24,10 @@ public class TileManager : MonoBehaviour {
     }
 
 	bool isValidTile() {
+        if(index != 0 && (index+1) % 20 == 0)
+        {
+            return false;
+        }
 		if (GameManager.instance.boardScript.tileStatus (index) != 0) {
 			return false;
 		}
