@@ -15,7 +15,7 @@ public class CameraPan : MonoBehaviour {
 		var mPosX = Input.mousePosition.x;
 		var mPosY = Input.mousePosition.y;
 		var xBountryRadius = 10;
-        var yBountryRadius = 10;
+        var yBountryRadius = 15;
         var zBountryRadius = 20;
 		
 		

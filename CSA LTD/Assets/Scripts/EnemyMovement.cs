@@ -16,8 +16,17 @@ public class EnemyMovement : MonoBehaviour {
     }
     void Update()
     {
+        if(path.Count == 0)
+        {
+            path.Add(new Vector3(0, 0, -17.5F));
+        }
         double dist = Vector3.Distance(transform.position, path[0]);
-        //Debug.Log("Currdist = " + dist + ", Path = " + path.Count);
+        /*string temp = "";
+        for (int x = 0; x < path.Count; x++)
+        {
+            temp = temp + path[x];
+        }
+        Debug.Log("Currdist = " + dist + ", Path = " + temp);*/
         if(dist < 1)
         {         
             path.RemoveAt(0);
@@ -43,6 +52,7 @@ public class EnemyMovement : MonoBehaviour {
 
     public void calculatePath()
     {
+        Debug.Log("recalculating path");
         path = GameManager.instance.boardScript.findShortestPath(transform.position);
     }
 }
