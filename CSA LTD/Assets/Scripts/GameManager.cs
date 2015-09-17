@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour {
             Vector3 position = new Vector3(Random.Range(-4.0F, 4.0F), 0.5F, Random.Range(15.5F, 18.5F));
             GameObject instance = Instantiate(obj, position, Quaternion.identity) as GameObject;
 
-            instance.GetComponent<EnemyMovement>().calculatePath();
+            //instance.GetComponent<EnemyMovement>().calculatePath();
 
             instance.transform.SetParent(enemyHolder);   
         }

@@ -108,6 +108,10 @@ public class BoardManager : MonoBehaviour {
         ans.Add(start);
         for(int x = 0; x < indexPath.Count; x++)
         {
+            if(boardStatus[indexPath[x]] != 0)
+            {
+                Debug.Log(indexPath[x]);
+            }
             ans.Add(gridPositions[indexPath[x]]);
         }
         Vector3 end = ans[ans.Count - 1];
@@ -149,7 +153,6 @@ public class BoardManager : MonoBehaviour {
                 }
             }
         }
-        Debug.Log(ans);
         return ans;
     }
 
@@ -177,7 +180,6 @@ public class BoardManager : MonoBehaviour {
             int current = openset.Peek();
             if(current <= 594 && current >= 585 && boardStatus[current] == 0)
             {
-                //RECONSTRUCT PATH HERE
                 List<int> path = new List<int>();
                 while(current != start)
                 {
@@ -260,7 +262,7 @@ public class BoardManager : MonoBehaviour {
             if (boardStatus[index - 1] == 0) { neighbors.Add(index - 1); }
             if (boardStatus[index - 20] == 0) { neighbors.Add(index - 20); }
         }
-        else if((index - 1) % 20 == 0) //right edge
+        else if((index + 1) % 20 == 0) //right edge
         {
             if (boardStatus[index - 1] == 0) { neighbors.Add(index - 1); }
             if (boardStatus[index - 20] == 0) { neighbors.Add(index - 20); }
@@ -269,7 +271,7 @@ public class BoardManager : MonoBehaviour {
         else //rest
         {
             if (boardStatus[index + 1] == 0) { neighbors.Add(index + 1); }
-            if (boardStatus[index - 1] == 0) { neighbors.Add(index + 1); }
+            if (boardStatus[index - 1] == 0) { neighbors.Add(index - 1); }
             if (boardStatus[index - 20] == 0) { neighbors.Add(index - 20); }
             if (boardStatus[index + 20] == 0) { neighbors.Add(index + 20); }
         }

@@ -12,10 +12,15 @@ public class EnemyMovement : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody>();
 		path = GameManager.instance.boardScript.findShortestPath(transform.position);
+        
 
     }
     void Update()
     {
+        if(rb.velocity.magnitude < 3 )
+        {
+            rb.velocity = Vector3.Normalize(rb.velocity) * 3;
+        }
         if(path.Count == 0)
         {
             path.Add(new Vector3(0, 0, -17.5F));
@@ -23,7 +28,7 @@ public class EnemyMovement : MonoBehaviour {
         double dist = Vector3.Distance(transform.position, path[0]);
         /*string temp = "";
         for (int x = 0; x < path.Count; x++)
-        {
+        {   
             temp = temp + path[x];
         }
         Debug.Log("Currdist = " + dist + ", Path = " + temp);*/
@@ -32,6 +37,7 @@ public class EnemyMovement : MonoBehaviour {
             path.RemoveAt(0);
             starttime = Time.time;
             rb.velocity = Vector3.Normalize(new Vector3(path[0].x - transform.position.x, 0, path[0].z - transform.position.z)) * rb.velocity.magnitude;
+            string temp = "";
         }
         rb.AddForce(Vector3.Normalize(new Vector3(path[0].x - transform.position.x, 0, path[0].z - transform.position.z)));
         int speed = 1;
@@ -43,16 +49,19 @@ public class EnemyMovement : MonoBehaviour {
     void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.name == "End Zone")
-        {
+        {  
             Destroy(gameObject);
         }
         if (other.gameObject.tag == "Tower")
+        {
             calculatePath();
+        }
+
     }
 
     public void calculatePath()
     {
-        Debug.Log("recalculating path");
         path = GameManager.instance.boardScript.findShortestPath(transform.position);
+        //Debug.Log(path[0]);
     }
 }
