@@ -108,10 +108,6 @@ public class BoardManager : MonoBehaviour {
         ans.Add(start);
         for(int x = 0; x < indexPath.Count; x++)
         {
-            if(boardStatus[indexPath[x]] != 0)
-            {
-                Debug.Log(indexPath[x]);
-            }
             ans.Add(gridPositions[indexPath[x]]);
         }
         Vector3 end = ans[ans.Count - 1];
@@ -381,21 +377,25 @@ class PriorityQueue<T>
         }
         public bool Equals(Node other)
         {
-            return O.Equals(other);
+            return O.Equals(other.O);
         }
         
     }
 
     private MinHeap<Node> minHeap = new MinHeap<Node>();
+	private List<T> elements = new List<T> ();
 
     public void Add(double priority, T element)
     {
         minHeap.Add(new Node() { Priority = priority, O = element });
+		elements.Add (element);
     }
 
     public T RemoveMin()
     {
-        return minHeap.RemoveMin().O;
+		T el = minHeap.RemoveMin().O;
+		elements.Remove (el);
+		return el; 
     }
 
     public T Peek()
@@ -403,9 +403,12 @@ class PriorityQueue<T>
         return minHeap.Peek().O;
     }
 
+	//currently using a workaround, fix removemin and contains in node / minheap to fix
     public bool Contains(T element)
-    {
-        return minHeap.Contains(new Node() { Priority = 0, O = element });
+    { 
+        //return minHeap.Contains(new Node() { Priority = 0, O = element });
+
+		return elements.Contains (element);
     }
 
     public int Count

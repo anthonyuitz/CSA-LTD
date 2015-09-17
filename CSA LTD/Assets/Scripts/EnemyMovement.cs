@@ -21,6 +21,9 @@ public class EnemyMovement : MonoBehaviour {
         {
             rb.velocity = Vector3.Normalize(rb.velocity) * 3;
         }
+		if (transform.position.y > .5 || transform.position.y < .5) {
+			transform.position = new Vector3(transform.position.x, .5F, transform.position.z);
+		}
         if(path.Count == 0)
         {
             path.Add(new Vector3(0, 0, -17.5F));
@@ -37,7 +40,6 @@ public class EnemyMovement : MonoBehaviour {
             path.RemoveAt(0);
             starttime = Time.time;
             rb.velocity = Vector3.Normalize(new Vector3(path[0].x - transform.position.x, 0, path[0].z - transform.position.z)) * rb.velocity.magnitude;
-            string temp = "";
         }
         rb.AddForce(Vector3.Normalize(new Vector3(path[0].x - transform.position.x, 0, path[0].z - transform.position.z)));
         int speed = 1;
