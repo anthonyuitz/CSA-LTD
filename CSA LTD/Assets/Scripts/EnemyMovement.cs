@@ -54,7 +54,7 @@ public class EnemyMovement : MonoBehaviour {
         {  
             Destroy(gameObject);
         }
-        if (other.gameObject.tag == "Tower")
+        if (other.gameObject.tag == "Tower" || other.gameObject.tag == "Wall")
         {
             calculatePath();
         }

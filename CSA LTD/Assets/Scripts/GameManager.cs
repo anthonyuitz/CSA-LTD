@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
     public GameObject obj;
     private Transform enemyHolder;
 	private List<Vector3> spawnPath;
+    public Transform towerHolder;
 
     public BoardManager boardScript;
 
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
         enemyHolder = new GameObject("Enemies").transform;
         boardScript = GetComponent<BoardManager>();
+        towerHolder = new GameObject("Towers").transform;
 
         InitGame();
     }

@@ -53,6 +53,8 @@ public class TileManager : MonoBehaviour {
 
             GameManager.instance.boardScript.towerPlaced(index, 1);
 
+            instance.transform.SetParent(GameManager.instance.towerHolder);
+
             Renderer rend = GetComponent<Renderer>();
             rend.material.color = Color.gray;
         }
