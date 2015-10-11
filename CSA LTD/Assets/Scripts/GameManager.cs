@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour {
     private Transform enemyHolder;
 	private List<Vector3> spawnPath;
     public Transform towerHolder;
+    public GameObject CanvasPrefab;
+    public Canvas UICanvas;
+    private int lives;
+    private int gold;
 
     public BoardManager boardScript;
 
@@ -27,12 +31,16 @@ public class GameManager : MonoBehaviour {
         boardScript = GetComponent<BoardManager>();
         towerHolder = new GameObject("Towers").transform;
 
+        UICanvas = Instantiate(CanvasPrefab, new Vector3(0, 0, 0), Quaternion.identity) as Canvas;
+
         InitGame();
     }
 
     void InitGame()
     {
         boardScript.SetUpScene();
+        lives = 50;
+        gold = 100;
     }
 
     // Update is called once per frame
@@ -47,6 +55,16 @@ public class GameManager : MonoBehaviour {
             instance.transform.SetParent(enemyHolder);   
         }
 	}
+
+    public void loseLives(int x)
+    {
+        lives += x;
+    }
+
+    public void changeGold(int x)
+    {
+        gold += x;
+    }
 
 
 }
