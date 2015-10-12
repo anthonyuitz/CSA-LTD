@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour {
     public Transform towerHolder;
     public GameObject CanvasPrefab;
     public GameObject UICanvas;
+    private List<GameObject> buttonUIList;
     private int lives;
     private int gold;
 
@@ -32,8 +33,7 @@ public class GameManager : MonoBehaviour {
         boardScript = GetComponent<BoardManager>();
         towerHolder = new GameObject("Towers").transform;
 
-        UICanvas = Instantiate(CanvasPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-        
+        SetUpUI();
 
         InitGame();
     }
@@ -84,4 +84,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    void SetUpUI()
+    {
+        UICanvas = Instantiate(CanvasPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+        GameObject g = UICanvas.transform.FindChild("SelectorUI").FindChild("ButtonQ").gameObject;
+    }
 }
