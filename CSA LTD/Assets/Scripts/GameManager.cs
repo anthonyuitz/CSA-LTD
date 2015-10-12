@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour {
 	private List<Vector3> spawnPath;
     public Transform towerHolder;
     public GameObject CanvasPrefab;
-    public Canvas UICanvas;
+    public GameObject UICanvas;
     private int lives;
     private int gold;
 
@@ -31,7 +32,8 @@ public class GameManager : MonoBehaviour {
         boardScript = GetComponent<BoardManager>();
         towerHolder = new GameObject("Towers").transform;
 
-        UICanvas = Instantiate(CanvasPrefab, new Vector3(0, 0, 0), Quaternion.identity) as Canvas;
+        UICanvas = Instantiate(CanvasPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+        
 
         InitGame();
     }
@@ -58,13 +60,28 @@ public class GameManager : MonoBehaviour {
 
     public void loseLives(int x)
     {
-        lives += x;
+        lives -= x;
+        UICanvas.transform.FindChild("PlayerInfoUI").FindChild("LivesUI").FindChild("LivesText").gameObject.GetComponent<Text>().text = "" + lives;
+        if (lives == 0)
+            gameover(true);
     }
 
     public void changeGold(int x)
     {
         gold += x;
+        UICanvas.transform.FindChild("PlayerInfoUI").FindChild("GoldUI").FindChild("GoldText").gameObject.GetComponent<Text>().text = "" + gold;
     }
 
+    void gameover(bool lost)
+    {
+        if(lost)
+        {
+            //put what happens when you lose the game here
+        }
+        else
+        {
+            //put what happens when you win the game here
+        }
+    }
 
 }

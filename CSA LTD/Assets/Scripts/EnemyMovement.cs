@@ -53,6 +53,7 @@ public class EnemyMovement : MonoBehaviour {
         if (other.gameObject.name == "End Zone")
         {  
             Destroy(gameObject);
+            GameManager.instance.loseLives(1);
         }
         if (other.gameObject.tag == "Tower" || other.gameObject.tag == "Wall")
         {
