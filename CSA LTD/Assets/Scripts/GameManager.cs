@@ -15,11 +15,14 @@ public class GameManager : MonoBehaviour {
     private List<GameObject> buttonUIList;
     private GameObject livesText;
     private GameObject goldText;
+    private GameObject incomeTimerText;
     private int lives;
     private int gold;
     private bool towerMenuOpen;
     private int towerMenuSelect;
     private bool enemyMenuOpen;
+    private int income;
+    private int incomeTimer;
 
     public BoardManager boardScript;
 
@@ -49,9 +52,12 @@ public class GameManager : MonoBehaviour {
     {
         boardScript.SetUpScene();
         lives = 50;
-        gold = 100;
+        gold = 0;
+        income = 100;
+        incomeTimer = 0;
         towerMenuOpen = false;
         enemyMenuOpen = false;
+        InvokeRepeating("receiveIncome", 0, 1);
     }
 
     // Update is called once per frame
@@ -98,7 +104,7 @@ public class GameManager : MonoBehaviour {
             gameover(true);
     }
 
-    public void changeGold(int x)
+    public void giveGold(int x)
     {
         gold += x;
         goldText.GetComponent<Text>().text = "" + gold;
@@ -122,6 +128,7 @@ public class GameManager : MonoBehaviour {
 
         livesText = UICanvas.transform.FindChild("PlayerInfoUI").FindChild("LivesUI").FindChild("LivesText").gameObject;
         goldText = UICanvas.transform.FindChild("PlayerInfoUI").FindChild("GoldUI").FindChild("GoldText").gameObject;
+        incomeTimerText = UICanvas.transform.FindChild("PlayerInfoUI").FindChild("IncomeTimerUI").gameObject;
 
         populateButtonUIList();
 
@@ -311,4 +318,11 @@ public class GameManager : MonoBehaviour {
             buttonUIList[x].transform.FindChild("Text").GetComponent<Text>().text = "";
         }
     }
+
+    void receiveIncome() {
+        if (incomeTimer == 0) { giveGold(income); incomeTimer = 30; }
+        else { incomeTimer--; }
+        incomeTimerText.GetComponent<Text>().text = "Income in: " + incomeTimer; 
+    }
+
 }
